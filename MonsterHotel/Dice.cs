@@ -5,17 +5,17 @@ using System.Text;
 
 namespace MonsterHotel
 {
-    public static class Dice
+    public class Dice
     {
-        private static Queue<int> _nextRoll = new Queue<int>();
-        private static Random _random = new Random();
+        private Queue<int> _nextRoll = new Queue<int>();
+        private Random _random = new Random();
 
-        public static void ShouldRoll(int number)
+        public void WhenRoll(int number)
         {
             _nextRoll.Enqueue(number);
         }
 
-        public static int Roll()
+        public int Roll()
         {
             if (_nextRoll.Any())
                 return _nextRoll.Dequeue();

@@ -9,13 +9,14 @@ namespace MonsterHotel
     {
         private static Random _random = new Random();
 
-        private Board _board;
-        private Space _previousSpace;
+        private readonly Game _game;
 
-        public Hero(Board board, Class @class)
+        private Space _previousSpace;
+        
+        public Hero(Game game, Class @class)
         {
-            _board = board;
-            Space = board.GreatHall;
+            _game = game;
+            Space = _game.Board.GreatHall;
             Class = @class;
             Treasure = new List<Treasure>();
         }
@@ -54,7 +55,7 @@ namespace MonsterHotel
 
         public void GoHome()
         {
-            Space = _board.GreatHall;
+            Space = _game.Board.GreatHall;
         }
 
         public void Die()
@@ -65,7 +66,7 @@ namespace MonsterHotel
 
         public void Attack(Monster monster)
         {
-            int roll = Dice.Roll() + Dice.Roll();
+            int roll = _game.Dice.Roll() + _game.Dice.Roll();
             if (roll >= monster.Defense[Class])
             {
                 monster.IsDestroyed = true;

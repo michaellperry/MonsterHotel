@@ -11,12 +11,12 @@ namespace MonsterHotel
         public Space NorthCorridor = new Space();
         public Space Room1 = new Space();
 
-        public Board()
+        public Board(Game game)
         {
             NorthSouth(NorthCorridor, GreatHall);
             EastWest(NorthCorridor, Room1);
 
-            Room1.Monster = new Monster
+            Room1.Monster = new Monster(game)
             {
                 Name = "Goblin",
                 Defense = new Dictionary<Class,int>

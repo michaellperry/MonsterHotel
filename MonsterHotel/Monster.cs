@@ -7,13 +7,20 @@ namespace MonsterHotel
 {
     public class Monster
     {
+        private readonly Game _game;
+
+        public Monster(Game game)
+        {
+            _game = game;
+        }
+
         public string Name { get; set; }
         public Dictionary<Class, int> Defense { get; set; }
         public bool IsDestroyed { get; set; }
 
         public void Attack(Hero hero)
         {
-            int roll = Dice.Roll() + Dice.Roll();
+            int roll = _game.Dice.Roll() + _game.Dice.Roll();
 
             if (roll == 12)
             {
