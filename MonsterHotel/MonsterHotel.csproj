@@ -36,16 +36,22 @@
     <!-- A reference to the entire .NET Framework is automatically included -->
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Board.cs" />
-    <Compile Include="Class.cs" />
-    <Compile Include="Dice.cs" />
-    <Compile Include="Direction.cs" />
-    <Compile Include="Game.cs" />
-    <Compile Include="Hero.cs" />
-    <Compile Include="Monster.cs" />
+    <Compile Include="Gameplay\Board.cs" />
+    <Compile Include="Gameplay\Class.cs" />
+    <Compile Include="Gameplay\Dice.cs" />
+    <Compile Include="Gameplay\Direction.cs" />
+    <Compile Include="Gameplay\Game.cs" />
+    <Compile Include="Gameplay\Hero.cs" />
+    <Compile Include="Gameplay\Monster.cs" />
+    <Compile Include="Generation\BoardGenerator.cs" />
+    <Compile Include="Generation\Edge.cs" />
+    <Compile Include="Generation\Graph.cs" />
+    <Compile Include="Generation\IRandomNumberGenerator.cs" />
+    <Compile Include="Generation\Node.cs" />
+    <Compile Include="Generation\Region.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Space.cs" />
-    <Compile Include="Treasure.cs" />
+    <Compile Include="Gameplay\Space.cs" />
+    <Compile Include="Gameplay\Treasure.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

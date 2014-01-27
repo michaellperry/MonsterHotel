@@ -61,8 +61,10 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="DungeonsTests.cs" />
+    <Compile Include="MonsterHotelTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SweepingRandomNumberGenerator.cs" />
+    <Compile Include="BoardGeneratorTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MonsterHotel\MonsterHotel.csproj">

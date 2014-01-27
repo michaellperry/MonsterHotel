@@ -1,5 +1,5 @@
 ﻿
-namespace MonsterHotel
+namespace MonsterHotel.Gameplay
 {
     public class Game
     {
