@@ -7,13 +7,26 @@ namespace MonsterHotel.Generation
 {
     public class Graph
     {
+        private Node _center;
         private List<Node> _nodes = new List<Node>();
         private List<Edge> _edges = new List<Edge>();
         private List<Region> _regions = new List<Region>();
 
+        public Node Center
+        {
+            get { return _center; }
+        }
+
+        public IEnumerable<Edge> Edges
+        {
+            get { return _edges; }
+        }
+
         public Node NewNode()
         {
             Node node = new Node();
+            if (_center == null)
+                _center = node;
             _nodes.Add(node);
             return node;
         }

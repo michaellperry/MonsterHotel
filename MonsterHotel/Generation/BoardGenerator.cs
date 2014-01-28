@@ -20,7 +20,9 @@ namespace MonsterHotel.Generation
             Graph graph = InitialGraph();
             var region = graph.RandomRegion(_randomNumberGenerator);
 
-            return new Board();
+            Board board = GraphToBoard(graph);
+
+            return board;
         }
 
         private static Graph InitialGraph()
@@ -49,6 +51,31 @@ namespace MonsterHotel.Generation
             var r5 = graph.NewRegion(wn, sw, es, ne);
 
             return graph;
+        }
+
+        private static Board GraphToBoard(Graph graph)
+        {
+            Board board = new Board();
+            Dictionary<Node, Space> nodeBySpace = new Dictionary<Node, Space>();
+            nodeBySpace[graph.Center] = board.Start;
+            foreach (var edge in graph.Edges)
+            {
+                Space space1 = EdgeToSpace(nodeBySpace, edge.Node1);
+                Space space2 = EdgeToSpace(nodeBySpace, edge.Node2);
+                space1.Join(space2);
+            }
+            return board;
+        }
+
+        private static Space EdgeToSpace(Dictionary<Node, Space> nodeBySpace, Node node)
+        {
+            Space space;
+            if (!nodeBySpace.TryGetValue(node, out space))
+            {
+                space = new Space();
+                nodeBySpace.Add(node, space);
+            }
+            return space;
         }
     }
 }

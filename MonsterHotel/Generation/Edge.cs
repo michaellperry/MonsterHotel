@@ -15,5 +15,15 @@ namespace MonsterHotel.Generation
             _node1 = node1;
             _node2 = node2;
         }
+
+        public Node Node1
+        {
+            get { return _node1; }
+        }
+
+        public Node Node2
+        {
+            get { return _node2; }
+        }
     }
 }
