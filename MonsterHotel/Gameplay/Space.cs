@@ -7,12 +7,19 @@ namespace MonsterHotel.Gameplay
 {
     public class Space
     {
-        public Space()
+        private List<Space> _neighbors = new List<Space>();
+
+        public IEnumerable<Space> Neighbors
         {
-            Neighbor = new Dictionary<Direction, Space>();
+            get { return _neighbors; }
         }
 
-        public Dictionary<Direction, Space> Neighbor { get; set; }
         public Monster Monster { get; set; }
+
+        public void Join(Space neighbor)
+        {
+            this._neighbors.Add(neighbor);
+            neighbor._neighbors.Add(this);
+        }
     }
 }

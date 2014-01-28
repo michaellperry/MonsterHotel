@@ -42,5 +42,20 @@ namespace MonsterHotel.Gameplay
                 hero.Drop();
             }
         }
+
+        public static Monster NewGoblin(Game game)
+        {
+            return new Monster(game)
+            {
+                Name = "Goblin",
+                Defense = new Dictionary<Class, int>
+                {
+                    { Class.Rogue, 3 },
+                    { Class.Cleric, 4 },
+                    { Class.Fighter, 2 },
+                    { Class.Wizard, 5 }
+                }
+            };
+        }
     }
 }

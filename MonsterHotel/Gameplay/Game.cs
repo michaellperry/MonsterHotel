@@ -8,7 +8,7 @@ namespace MonsterHotel.Gameplay
 
         public Game()
         {
-            _board = new Board(this);
+            _board = new Board();
             _dice = new Dice();
         }
 

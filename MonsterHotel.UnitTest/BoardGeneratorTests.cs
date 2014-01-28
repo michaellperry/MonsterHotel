@@ -18,8 +18,7 @@ namespace MonsterHotel.UnitTest
             int passes = 0;
             while (randomNumberGenerator.Next())
             {
-                var game = new Game();
-                var board = boardGenerator.GenerateBoard(game);
+                var board = boardGenerator.GenerateBoard();
                 ++passes;
             }
 

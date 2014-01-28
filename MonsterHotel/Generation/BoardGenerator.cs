@@ -15,9 +15,18 @@ namespace MonsterHotel.Generation
             _randomNumberGenerator = randomNumberGenerator;
         }
 
-        public Board GenerateBoard(Game game)
+        public Board GenerateBoard()
+        {
+            Graph graph = InitialGraph();
+            var region = graph.RandomRegion(_randomNumberGenerator);
+
+            return new Board();
+        }
+
+        private static Graph InitialGraph()
         {
             var graph = new Graph();
+
             var c = graph.NewNode();
             var n = graph.NewNode();
             var e = graph.NewNode();
@@ -39,9 +48,7 @@ namespace MonsterHotel.Generation
             var r4 = graph.NewRegion(cw, wn, cn);
             var r5 = graph.NewRegion(wn, sw, es, ne);
 
-            var region = graph.RandomRegion(_randomNumberGenerator);
-
-            return new Board(game);
+            return graph;
         }
     }
 }

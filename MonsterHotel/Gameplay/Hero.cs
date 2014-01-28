@@ -16,7 +16,7 @@ namespace MonsterHotel.Gameplay
         public Hero(Game game, Class @class)
         {
             _game = game;
-            Space = _game.Board.GreatHall;
+            Space = _game.Board.Start;
             Class = @class;
             Treasure = new List<Treasure>();
         }
@@ -34,11 +34,11 @@ namespace MonsterHotel.Gameplay
         }
         public int LostTurns { get; set; }
 
-        public void Move(Direction direction)
+        public void Move(Space opposite = null)
         {
             try
             {
-                Space nextSpace = Space.Neighbor[direction];
+                Space nextSpace = Space.Neighbors.First(s => s != opposite);
                 _previousSpace = Space;
                 Space = nextSpace;
             }
@@ -55,7 +55,7 @@ namespace MonsterHotel.Gameplay
 
         public void GoHome()
         {
-            Space = _game.Board.GreatHall;
+            Space = _game.Board.Start;
         }
 
         public void Die()

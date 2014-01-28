@@ -39,7 +39,6 @@
     <Compile Include="Gameplay\Board.cs" />
     <Compile Include="Gameplay\Class.cs" />
     <Compile Include="Gameplay\Dice.cs" />
-    <Compile Include="Gameplay\Direction.cs" />
     <Compile Include="Gameplay\Game.cs" />
     <Compile Include="Gameplay\Hero.cs" />
     <Compile Include="Gameplay\Monster.cs" />

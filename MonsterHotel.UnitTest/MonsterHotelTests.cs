@@ -7,13 +7,16 @@ namespace MonsterHotel.Test
     [TestClass]
     public class MonsterHotelTests
     {
+        private Space _northCorridor;
+        private Space _room1;
+
         [TestMethod]
         public void StartsInTheGreatHall()
         {
             Game game = GivenGame();
             Hero fighter = GivenFighter(game);
 
-            Assert.AreSame(game.Board.GreatHall, fighter.Space);
+            Assert.AreSame(game.Board.Start, fighter.Space);
         }
 
         [TestMethod]
@@ -22,9 +25,9 @@ namespace MonsterHotel.Test
             Game game = GivenGame();
             Hero wizard = GivenWizard(game);
 
-            wizard.Move(Direction.North);
+            wizard.Move();
 
-            wizard.Space.Should().Be(game.Board.NorthCorridor);
+            wizard.Space.Should().Be(_northCorridor);
         }
 
         [TestMethod]
@@ -33,10 +36,10 @@ namespace MonsterHotel.Test
             Game game = GivenGame();
             Hero wizard = GivenWizard(game);
 
-            wizard.Move(Direction.North);
-            wizard.Move(Direction.South);
+            wizard.Move();
+            wizard.Move(_room1);
 
-            wizard.Space.Should().Be(game.Board.GreatHall);
+            wizard.Space.Should().Be(game.Board.Start);
         }
 
         [TestMethod]
@@ -45,10 +48,10 @@ namespace MonsterHotel.Test
             Game game = GivenGame();
             Hero wizard = GivenWizard(game);
 
-            wizard.Move(Direction.North);
-            wizard.Move(Direction.West);
+            wizard.Move();
+            wizard.Move(game.Board.Start);
 
-            wizard.Space.Should().Be(game.Board.Room1);
+            wizard.Space.Should().Be(_room1);
         }
 
         [TestMethod]
@@ -56,7 +59,7 @@ namespace MonsterHotel.Test
         {
             Game game = GivenGame();
 
-            Monster goblin = game.Board.Room1.Monster;
+            Monster goblin = _room1.Monster;
 
             goblin.Name.Should().Be("Goblin");
         }
@@ -70,7 +73,7 @@ namespace MonsterHotel.Test
             game.Dice.WhenRoll(1);
             game.Dice.WhenRoll(1);
 
-            Monster goblin = game.Board.Room1.Monster;
+            Monster goblin = Monster.NewGoblin(game);
             fighter.Attack(goblin);
 
             goblin.IsDestroyed.Should().BeTrue("The fighter should have destroyed the goblin.");
@@ -85,7 +88,7 @@ namespace MonsterHotel.Test
             game.Dice.WhenRoll(2);
             game.Dice.WhenRoll(2);
 
-            Monster goblin = game.Board.Room1.Monster;
+            Monster goblin = Monster.NewGoblin(game);
             wizard.Attack(goblin);
 
             goblin.IsDestroyed.Should().BeFalse("The wizard should not have destroyed the goblin.");
@@ -101,7 +104,7 @@ namespace MonsterHotel.Test
             game.Dice.WhenRoll(1);
             game.Dice.WhenRoll(4);
 
-            Monster goblin = game.Board.Room1.Monster;
+            Monster goblin = Monster.NewGoblin(game);
             goblin.Attack(wizard);
 
             wizard.Treasure.Count.Should().Be(1);
@@ -117,7 +120,7 @@ namespace MonsterHotel.Test
             game.Dice.WhenRoll(2);
             game.Dice.WhenRoll(4);
 
-            Monster goblin = game.Board.Room1.Monster;
+            Monster goblin = Monster.NewGoblin(game);
             goblin.Attack(wizard);
 
             wizard.Treasure.Count.Should().Be(0);
@@ -130,17 +133,17 @@ namespace MonsterHotel.Test
             Hero wizard = GivenWizard(game);
 
             wizard.Treasure.Add(new Treasure());
-            wizard.Move(Direction.North);
-            wizard.Move(Direction.West);
+            wizard.Move();
+            wizard.Move();
             game.Dice.WhenRoll(4);
             game.Dice.WhenRoll(4);
 
-            Monster goblin = game.Board.Room1.Monster;
+            Monster goblin = Monster.NewGoblin(game);
             goblin.Attack(wizard);
 
             wizard.Treasure.Count.Should().Be(0);
             wizard.LostTurns.Should().Be(1);
-            wizard.Space.Should().Be(game.Board.NorthCorridor);
+            wizard.Space.Should().Be(_northCorridor);
         }
 
         [TestMethod]
@@ -151,17 +154,17 @@ namespace MonsterHotel.Test
 
             for (int i = 0; i < 7; ++i )
                 wizard.Treasure.Add(new Treasure());
-            wizard.Move(Direction.North);
-            wizard.Move(Direction.West);
+            wizard.Move();
+            wizard.Move();
             game.Dice.WhenRoll(5);
             game.Dice.WhenRoll(6);
 
-            Monster goblin = game.Board.Room1.Monster;
+            Monster goblin = Monster.NewGoblin(game);
             goblin.Attack(wizard);
 
             wizard.Treasure.Count.Should().Be(3);
             wizard.LostTurns.Should().Be(0);
-            wizard.Space.Should().Be(game.Board.GreatHall);
+            wizard.Space.Should().Be(game.Board.Start);
         }
 
         [TestMethod]
@@ -172,12 +175,12 @@ namespace MonsterHotel.Test
 
             for (int i = 0; i < 7; ++i)
                 wizard.Treasure.Add(new Treasure());
-            wizard.Move(Direction.North);
-            wizard.Move(Direction.West);
+            wizard.Move();
+            wizard.Move();
             game.Dice.WhenRoll(6);
             game.Dice.WhenRoll(6);
 
-            Monster goblin = game.Board.Room1.Monster;
+            Monster goblin = Monster.NewGoblin(game);
             goblin.Attack(wizard);
 
             wizard.IsDestroyed.Should().BeTrue("The goblin should have killed the wizard.");
@@ -198,7 +201,14 @@ namespace MonsterHotel.Test
 
         private Game GivenGame()
         {
-            return new Game();
+            Game game = new Game();
+            _northCorridor = new Space();
+            _room1 = new Space();
+            _northCorridor.Join(game.Board.Start);
+            _northCorridor.Join(_room1);
+
+            _room1.Monster = Monster.NewGoblin(game);
+            return game;
         }
 
         private static Hero GivenFighter(Game game)
